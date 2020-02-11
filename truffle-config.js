@@ -2,28 +2,25 @@
 require('@babel/register')
 require('@babel/polyfill')
 
-var HDWalletProvider = require('truffle-hdwallet-provider')
 
-var mnemonic = process.env.HDWALLET_MNEMONIC
-
+const HDWalletProvider = require("@truffle/hdwallet-provider");
+const mnemonic = "unfold extra know hat kiwi child lobster spike draw iron margin scan";
 module.exports = {
-  networks: {
-    ropsten: {
-      provider: new HDWalletProvider(mnemonic, process.env.ROPSTEN_PROVIDER_URL),
-      network_id: 3,
-      gas: 4612388,
-      gasPrice: 100000000000
-    },
-    rinkeby: {
-      provider: new HDWalletProvider(mnemonic, process.env.RINKEBY_PROVIDER_URL),
-      network_id: 4,
-      gas: 4612388,
-      gasPrice: 100000000000
-    },
-    development: {
-      host: '127.0.0.1',
-      port: 8545,
-      network_id: 1234 // Match any network id
+       networks: {
+        ropsten: {
+          provider: function() {
+            return new HDWalletProvider(mnemonic, "https://ropsten.infura.io/v3/94db3a2237564b499554399023ca9d3e", 0);
+          },
+          network_id: '3',
+        },
+        test: {
+          provider: function() {
+            return new HDWalletProvider(mnemonic, "http://127.0.0.1:8545/");
+          },
+          network_id: '*',
+        }},
+        compilers: {
+          solc: {
+            version: "^0.4.23"
+      }}
     }
-  }
-}
